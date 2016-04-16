@@ -1,3 +1,8 @@
+import numpy as np
+import pandas as pd
+import pylab as plt
+import math
+import random
 def solve(dataset):
     x, y = dataset.split()
     x, y = float(x), float(y)

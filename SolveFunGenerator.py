@@ -59,7 +59,7 @@ def GenerateFun(diff):
                 funct += '( ' + Parabola[0] + ' )'
                 flag = 1
         diff -= i
-    graphs.appens(funct)
+    graphs.append(funct)
     return graphs
 difficulty = 7
 f = open('Solve.py', 'w')
@@ -72,10 +72,11 @@ f.write('    if ' + funct[-1] + ':\n')
 f.write('        return 1\n')
 f.write('    else:\n')
 f.write('        return 0\n')
+f1.write('import numpy as np\nimport pandas as pd\nimport pylab as plt\nimport math\nimport random\n')
 f1.write('def solve(dataset):\n')
 f1.write('    x, y = dataset.split()\n')
 f1.write('    x, y = float(x), float(y)\n')
-f1.write('    if ' + funct + ':\n')
+f1.write('    if ' + funct[-1] + ':\n')
 f1.write('        return 1\n')
 f1.write('    else:\n')
 f1.write('        return 0\n')
