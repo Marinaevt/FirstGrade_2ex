@@ -6,7 +6,38 @@ import random
 def solve(dataset):
     x, y = dataset.split()
     x, y = float(x), float(y)
-    if ( y >(x--3)**2+-6 )|( (x - -10)**2+ (y - -2)**2<2**2 )&( y<(5--7*x)/9 )&( y <(x--8)**2+1 ):
+    if ( y <(x--10)**2+3 )&( y <(x-9)**2+-3 )&( (x - 7)**2+ (y - -4)**2>4**2 ):
         return 1
     else:
         return 0
+x = np.linspace(-10, 10, 200)
+y = np.linspace(-10, 10, 200)
+x1 = []
+y1 = []
+for i in x:
+    for j in y:
+        if solve(str(i) + ' ' + str(j)):
+            x1.append(i)
+            y1.append(j)
+plt.plot(x1, y1, 'c.', alpha=0.2)
+y2 =(x--10)**2+3
+plt.plot(x, y2, 'b')
+y2 =(x-9)**2+-3
+plt.plot(x, y2, 'b')
+y2 = (4**2 - (x - 7)**2)**(0.5) + -4
+plt.plot(x, y2, 'b')
+y2 = -(4**2 - (x - 7)**2)**(0.5) + -4
+plt.plot(x, y2, 'b')
+axes = plt.gca()
+axes.set_xlim(-10, 10)
+axes.set_ylim(-9, 9)
+axes.xaxis.set_major_locator(plt.MultipleLocator(1.0))
+axes.xaxis.set_minor_locator(plt.MultipleLocator(1.0))
+axes.yaxis.set_major_locator(plt.MultipleLocator(1.0))
+axes.yaxis.set_minor_locator(plt.MultipleLocator(1.0))
+axes.grid(which='major', axis='x', linewidth=0.5, linestyle='-', color='0.75')
+axes.grid(which='minor', axis='x', linewidth=0.25, linestyle='-', color='0.75')
+axes.grid(which='major', axis='y', linewidth=0.5, linestyle='-', color='0.75')
+axes.grid(which='minor', axis='y', linewidth=0.25, linestyle='-', color='0.75')
+plt.gca().set_aspect('equal', adjustable='box')
+plt.savefig('graph.png', bbox_inches='tight')
