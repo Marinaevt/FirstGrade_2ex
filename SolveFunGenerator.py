@@ -1,5 +1,7 @@
 import random
 import IsInside
+import numpy as np
+import math
 def GenerateLine(points, znak):
     i = random.randint(0, len(points) - 2)
     B = points[i][1] - points[i + 1][1]
@@ -17,9 +19,11 @@ def GenerateCircle(points, znak):
     y1 = points[a][1]
     j = random.randint(0, len(znak)-1)
     #return ['(x - ' + str(x1) + ')**2' + '+ (y - ' + str(y1) + ')**2' + str(znak[j]) + str(r) + '**2', '(x - ' + str(x1) + ')**2' + '+ (y - ' + str(y1) + ')**2' + '=' + str(r) + '**2']
+    #return ['(x - ' + str(x1) + ')**2' + '+ (y - ' + str(y1) + ')**2' + str(znak[j]) + str(r) + '**2',
+    #       'y2 = (' + str(r) + '**2 - (x - ' + str(x1) + ')**2)**(0.5) + ' + str(y1),
+    #        'y2 = -(' + str(r) + '**2 - (x - ' + str(x1) + ')**2)**(0.5) + ' + str(y1)]
     return ['(x - ' + str(x1) + ')**2' + '+ (y - ' + str(y1) + ')**2' + str(znak[j]) + str(r) + '**2',
-            'y2 = (' + str(r) + '**2 - (x - ' + str(x1) + ')**2)**(0.5) + ' + str(y1),
-            'y2 = -(' + str(r) + '**2 - (x - ' + str(x1) + ')**2)**(0.5) + ' + str(y1)]
+            [x1, y1, r]]
 def GenerateParabola(points, znak):
     a = random.randint(0, len(points)-1)
     x1 = points[a][0]
@@ -31,12 +35,12 @@ def GenerateInsidePoints():
     points = []
     pointtemp = []
     for i in range(8):
-        pointtemp.append(random.randint(-10, 10))
-        pointtemp.append(random.randint(-10, 10))
+        pointtemp.append(random.randint(-5, 5))
+        pointtemp.append(random.randint(-5, 5))
         while IsInside.IsInside(pointtemp[0], pointtemp[1]) == 0:
             pointtemp = []
-            pointtemp.append(random.randint(-10, 10))
-            pointtemp.append(random.randint(-10, 10))
+            pointtemp.append(random.randint(-5, 5))
+            pointtemp.append(random.randint(-5, 5))
         if pointtemp[0] > maxX:
             maxX = pointtemp[0]
         if pointtemp[0] < minX:
@@ -53,8 +57,8 @@ def GenerateFun(diff):
     points = []
     pointtemp = []
     for i in range(8):
-        pointtemp.append(random.randint(-10, 10))
-        pointtemp.append(random.randint(-10, 10))
+        pointtemp.append(random.randint(-5, 5))
+        pointtemp.append(random.randint(-5, 5))
         if pointtemp[0] > maxX:
             maxX = pointtemp[0]
         if pointtemp[0] < minX:
@@ -83,7 +87,7 @@ def GenerateFun(diff):
         elif i == 2:
             Circle = GenerateCircle(points, znak)
             graphs.append(Circle[1])
-            graphs.append(Circle[2])
+            #graphs.append(Circle[2])
             if flag:
                 funct += logicznak[j] + '( ' + Circle[0] + ' )'
             else:
@@ -150,11 +154,21 @@ f1.write('            x1.append(i)\n')
 f1.write('            y1.append(j)\n')
 f1.write('plt.plot(x1, y1, \'c.\', alpha=0.2)\n')
 for i in range(len(funct)-1):
-    f1.write(funct[i] + '\n')
-    f1.write('plt.plot(x, y2, \'b\')\n')
+    aaaa = len(funct[i])
+    if len(funct[i]) != 3:
+        f1.write(funct[i] + '\n')
+        f1.write('plt.plot(x, y2, \'b\')\n')
+    else:
+        f1.write('Circle = [' + str(funct[i][0]) + '+' + str(funct[i][2]) + '* np.cos(np.linspace(0, 2 * math.pi, 1000)), ' + str(funct[i][1]) + '+' + str(funct[i][2]) + '* np.sin(np.linspace(0, 2 * math.pi, 1000))]\n')
+        f1.write('plt.plot(Circle[0], Circle[1])\n')
+        #f1.write('y2 = ' + str(funct[i][0]) + '\n')
+        #f1.write('x2 = ' + str(funct[i][1]) + '\n')
+        #f1.write('plt.plot(x2, y2, \'b\')\n')
 f1.write('axes = plt.gca()\n')
-f1.write('axes.set_xlim(' + str(minX) + ', ' + str(maxX) + ')\n')
-f1.write('axes.set_ylim(' + str(minY) + ', ' + str(maxY) + ')\n')
+#f1.write('axes.set_xlim(' + str(minX) + ', ' + str(maxX) + ')\n')
+#f1.write('axes.set_ylim(' + str(minY) + ', ' + str(maxY) + ')\n')
+f1.write('axes.set_xlim(-10, 10)\n')
+f1.write('axes.set_ylim(-10, 10)\n')
 f1.write('axes.xaxis.set_major_locator(plt.MultipleLocator(1.0))\n')
 f1.write('axes.xaxis.set_minor_locator(plt.MultipleLocator(1.0))\n')
 f1.write('axes.yaxis.set_major_locator(plt.MultipleLocator(1.0))\n')

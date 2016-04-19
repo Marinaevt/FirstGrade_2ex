@@ -6,7 +6,7 @@ import random
 def solve(dataset):
     x, y = dataset.split()
     x, y = float(x), float(y)
-    if ( y <(x--10)**2+3 )&( y <(x-9)**2+-3 )&( (x - 7)**2+ (y - -4)**2>4**2 ):
+    if ( y >(x--3)**2+1 )&( y >(x--3)**2+2 )|( y >(x-5)**2+4 ):
         return 1
     else:
         return 0
@@ -20,17 +20,15 @@ for i in x:
             x1.append(i)
             y1.append(j)
 plt.plot(x1, y1, 'c.', alpha=0.2)
-y2 =(x--10)**2+3
+y2 =(x--3)**2+1
 plt.plot(x, y2, 'b')
-y2 =(x-9)**2+-3
+y2 =(x--3)**2+2
 plt.plot(x, y2, 'b')
-y2 = (4**2 - (x - 7)**2)**(0.5) + -4
-plt.plot(x, y2, 'b')
-y2 = -(4**2 - (x - 7)**2)**(0.5) + -4
+y2 =(x-5)**2+4
 plt.plot(x, y2, 'b')
 axes = plt.gca()
 axes.set_xlim(-10, 10)
-axes.set_ylim(-9, 9)
+axes.set_ylim(-10, 10)
 axes.xaxis.set_major_locator(plt.MultipleLocator(1.0))
 axes.xaxis.set_minor_locator(plt.MultipleLocator(1.0))
 axes.yaxis.set_major_locator(plt.MultipleLocator(1.0))
