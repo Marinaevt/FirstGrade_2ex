@@ -31,7 +31,9 @@ def GenerateParabola(points, znak):
     x1 = points[a][0]
     y1 = points[a][1]
     j = random.randint(0, len(znak)-1)
-    return ['y ' + str(znak[j]) + '(x-' + str(x1) + ')**2' + '+' + str(y1), 'y2 =' + '(x-' + str(x1) + ')**2' + '+' + str(y1)]
+    #return ['y ' + str(znak[j]) + '(x-' + str(x1) + ')**2' + '+' + str(y1), 'y2 =' + '(x-' + str(x1) + ')**2' + '+' + str(y1)]
+    return ['y ' + str(znak[j]) + '(x-' + str(x1) + ')**2' + '+' + str(y1),
+            [x1, y1]]
 def GenerateInsidePoints():
     global minX, minY, maxX, maxY
     points = []
@@ -125,7 +127,7 @@ def GenerateFun(diff):
     graphs.append(funct)
     return graphs
 difficulty = 7
-numvar = 5
+numvar = 2
 for k in range(numvar):
     maxY = -10
     minY = 10
@@ -165,15 +167,20 @@ for k in range(numvar):
     f1.write('plt.plot(x1, y1, \'c.\', alpha=0.2)\n')
     for i in range(len(funct)-1):
         aaaa = len(funct[i])
-        if len(funct[i]) != 3:
-            f1.write(funct[i] + '\n')
-            f1.write('plt.plot(x, y2, \'b\')\n')
-        else:
+        if len(funct[i]) == 3:
             f1.write('Circle = [' + str(funct[i][0]) + '+' + str(funct[i][2]) + '* np.cos(np.linspace(0, 2 * math.pi, 1000)), ' + str(funct[i][1]) + '+' + str(funct[i][2]) + '* np.sin(np.linspace(0, 2 * math.pi, 1000))]\n')
             f1.write('plt.plot(Circle[0], Circle[1], \'b\')\n')
-            #f1.write('y2 = ' + str(funct[i][0]) + '\n')
-            #f1.write('x2 = ' + str(funct[i][1]) + '\n')
-            #f1.write('plt.plot(x2, y2, \'b\')\n')
+            f1.write('plt.plot({}, {}, \'ko\')\n'.format(funct[i][0], funct[i][1]))
+            # f1.write('y2 = ' + str(funct[i][0]) + '\n')
+            # f1.write('x2 = ' + str(funct[i][1]) + '\n')
+            # f1.write('plt.plot(x2, y2, \'b\')\n')
+        elif len(funct[i]) == 2:
+            f1.write('y2 = (x - {})**2+{}\n'.format(funct[i][0], funct[i][1]))
+            f1.write('plt.plot(x, y2, \'b\')\n')
+            f1.write('plt.plot({}, {}, \'ko\')\n'.format(funct[i][0], funct[i][1]))
+        else:
+            f1.write(funct[i] + '\n')
+            f1.write('plt.plot(x, y2, \'b\')\n')
     f1.write('axes = plt.gca()\n')
     #f1.write('axes.set_xlim(' + str(minX) + ', ' + str(maxX) + ')\n')
     #f1.write('axes.set_ylim(' + str(minY) + ', ' + str(maxY) + ')\n')
@@ -183,10 +190,10 @@ for k in range(numvar):
     f1.write('axes.xaxis.set_minor_locator(plt.MultipleLocator(1.0))\n')
     f1.write('axes.yaxis.set_major_locator(plt.MultipleLocator(1.0))\n')
     f1.write('axes.yaxis.set_minor_locator(plt.MultipleLocator(1.0))\n')
-    f1.write('axes.grid(which=\'major\', axis=\'x\', linewidth=0.5, linestyle=\'-\', color=\'0.75\')\n')
-    f1.write('axes.grid(which=\'minor\', axis=\'x\', linewidth=0.25, linestyle=\'-\', color=\'0.75\')\n')
-    f1.write('axes.grid(which=\'major\', axis=\'y\', linewidth=0.5, linestyle=\'-\', color=\'0.75\')\n')
-    f1.write('axes.grid(which=\'minor\', axis=\'y\', linewidth=0.25, linestyle=\'-\', color=\'0.75\')\n')
+    f1.write('axes.grid(which=\'major\', axis=\'x\', linewidth=0.55, linestyle=\'-\', color=\'0.6\')\n')
+    f1.write('axes.grid(which=\'minor\', axis=\'x\', linewidth=0.3, linestyle=\'-\', color=\'0.6\')\n')
+    f1.write('axes.grid(which=\'major\', axis=\'y\', linewidth=0.55, linestyle=\'-\', color=\'0.6\')\n')
+    f1.write('axes.grid(which=\'minor\', axis=\'y\', linewidth=0.3, linestyle=\'-\', color=\'0.6\')\n')
     f1.write('plt.gca().set_aspect(\'equal\', adjustable=\'box\')\n')
     f1.write('plt.savefig(\'graph' + str(k) + '.png\', bbox_inches=\'tight\')\n')
     f.close()

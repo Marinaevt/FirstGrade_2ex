@@ -12,7 +12,7 @@ def generate():
 def solve(dataset):
     x, y = dataset.split()
     x, y = float(x), float(y)
-    if ( (x - 5)**2+ (y - -4)**2<1**2 )|( y <(x--4)**2+-2 )|( (x - 2)**2+ (y - -3)**2>4**2 ):
+    if ( (x - -3)**2+ (y - 5)**2<5**2 )&( y>(-7-4*x)/-3 )|( y>(-6-2*x)/-2 )&( (x - 3)**2+ (y - 0)**2<4**2 )&( (x - 3)**2+ (y - 0)**2>2**2 ):
         return 'YES'
     else:
         return 'NO'
