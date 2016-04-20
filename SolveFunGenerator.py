@@ -2,6 +2,8 @@ import random
 import IsInside
 import numpy as np
 import math
+import os
+
 def GenerateLine(points, znak):
     i = random.randint(0, len(points) - 2)
     B = points[i][1] - points[i + 1][1]
@@ -123,61 +125,73 @@ def GenerateFun(diff):
     graphs.append(funct)
     return graphs
 difficulty = 7
-maxY = -10
-minY = 10
-maxX = -10
-minX = 10
-f = open('Solve.py', 'w')
-f1 = open('SolveGraph.py', 'w')
-f.write('def solve(dataset):\n')
-f.write('    x, y = dataset.split()\n')
-f.write('    x, y = float(x), float(y)\n')
-funct = GenerateFun(difficulty)
-f.write('    if ' + funct[-1] + ':\n')
-f.write('        return 1\n')
-f.write('    else:\n')
-f.write('        return 0\n')
-f1.write('import numpy as np\nimport pandas as pd\nimport pylab as plt\nimport math\nimport random\n')
-f1.write('def solve(dataset):\n')
-f1.write('    x, y = dataset.split()\n')
-f1.write('    x, y = float(x), float(y)\n')
-f1.write('    if ' + funct[-1] + ':\n')
-f1.write('        return 1\n')
-f1.write('    else:\n')
-f1.write('        return 0\n')
-f1.write('x = np.linspace(-10, 10, 200)\ny = np.linspace(-10, 10, 200)\n')
-f1.write('x1 = []\ny1 = []\n')
-f1.write('for i in x:\n')
-f1.write('    for j in y:\n')
-f1.write('        if solve(str(i) + \' \' + str(j)):\n')
-f1.write('            x1.append(i)\n')
-f1.write('            y1.append(j)\n')
-f1.write('plt.plot(x1, y1, \'c.\', alpha=0.2)\n')
-for i in range(len(funct)-1):
-    aaaa = len(funct[i])
-    if len(funct[i]) != 3:
-        f1.write(funct[i] + '\n')
-        f1.write('plt.plot(x, y2, \'b\')\n')
-    else:
-        f1.write('Circle = [' + str(funct[i][0]) + '+' + str(funct[i][2]) + '* np.cos(np.linspace(0, 2 * math.pi, 1000)), ' + str(funct[i][1]) + '+' + str(funct[i][2]) + '* np.sin(np.linspace(0, 2 * math.pi, 1000))]\n')
-        f1.write('plt.plot(Circle[0], Circle[1])\n')
-        #f1.write('y2 = ' + str(funct[i][0]) + '\n')
-        #f1.write('x2 = ' + str(funct[i][1]) + '\n')
-        #f1.write('plt.plot(x2, y2, \'b\')\n')
-f1.write('axes = plt.gca()\n')
-#f1.write('axes.set_xlim(' + str(minX) + ', ' + str(maxX) + ')\n')
-#f1.write('axes.set_ylim(' + str(minY) + ', ' + str(maxY) + ')\n')
-f1.write('axes.set_xlim(-10, 10)\n')
-f1.write('axes.set_ylim(-10, 10)\n')
-f1.write('axes.xaxis.set_major_locator(plt.MultipleLocator(1.0))\n')
-f1.write('axes.xaxis.set_minor_locator(plt.MultipleLocator(1.0))\n')
-f1.write('axes.yaxis.set_major_locator(plt.MultipleLocator(1.0))\n')
-f1.write('axes.yaxis.set_minor_locator(plt.MultipleLocator(1.0))\n')
-f1.write('axes.grid(which=\'major\', axis=\'x\', linewidth=0.5, linestyle=\'-\', color=\'0.75\')\n')
-f1.write('axes.grid(which=\'minor\', axis=\'x\', linewidth=0.25, linestyle=\'-\', color=\'0.75\')\n')
-f1.write('axes.grid(which=\'major\', axis=\'y\', linewidth=0.5, linestyle=\'-\', color=\'0.75\')\n')
-f1.write('axes.grid(which=\'minor\', axis=\'y\', linewidth=0.25, linestyle=\'-\', color=\'0.75\')\n')
-f1.write('plt.gca().set_aspect(\'equal\', adjustable=\'box\')\n')
-f1.write('plt.savefig(\'graph.png\', bbox_inches=\'tight\')\n')
-f.close()
-f1.close()
+numvar = 5
+for k in range(numvar):
+    maxY = -10
+    minY = 10
+    maxX = -10
+    minX = 10
+    f = open('Solve' + str(k) + '.py', 'w')
+    f1 = open('SolveGraph' + str(k) + '.py', 'w')
+    f2 = open('TestGenerator.py', 'r')
+    f3 = open('CheckFile.py', 'r')
+    for line in f2:
+        f.write(line)
+    f.write('def solve(dataset):\n')
+    f.write('    x, y = dataset.split()\n')
+    f.write('    x, y = float(x), float(y)\n')
+    funct = GenerateFun(difficulty)
+    f.write('    if ' + funct[-1] + ':\n')
+    f.write('        return \'YES\'\n')
+    f.write('    else:\n')
+    f.write('        return \'NO\'\n')
+    for line in f3:
+        f.write(line)
+    f1.write('import numpy as np\nimport pandas as pd\nimport pylab as plt\nimport math\nimport random\n')
+    f1.write('def solve(dataset):\n')
+    f1.write('    x, y = dataset.split()\n')
+    f1.write('    x, y = float(x), float(y)\n')
+    f1.write('    if ' + funct[-1] + ':\n')
+    f1.write('        return 1\n')
+    f1.write('    else:\n')
+    f1.write('        return 0\n')
+    f1.write('x = np.linspace(-10, 10, 200)\ny = np.linspace(-10, 10, 200)\n')
+    f1.write('x1 = []\ny1 = []\n')
+    f1.write('for i in x:\n')
+    f1.write('    for j in y:\n')
+    f1.write('        if solve(str(i) + \' \' + str(j)):\n')
+    f1.write('            x1.append(i)\n')
+    f1.write('            y1.append(j)\n')
+    f1.write('plt.plot(x1, y1, \'c.\', alpha=0.2)\n')
+    for i in range(len(funct)-1):
+        aaaa = len(funct[i])
+        if len(funct[i]) != 3:
+            f1.write(funct[i] + '\n')
+            f1.write('plt.plot(x, y2, \'b\')\n')
+        else:
+            f1.write('Circle = [' + str(funct[i][0]) + '+' + str(funct[i][2]) + '* np.cos(np.linspace(0, 2 * math.pi, 1000)), ' + str(funct[i][1]) + '+' + str(funct[i][2]) + '* np.sin(np.linspace(0, 2 * math.pi, 1000))]\n')
+            f1.write('plt.plot(Circle[0], Circle[1], \'b\')\n')
+            #f1.write('y2 = ' + str(funct[i][0]) + '\n')
+            #f1.write('x2 = ' + str(funct[i][1]) + '\n')
+            #f1.write('plt.plot(x2, y2, \'b\')\n')
+    f1.write('axes = plt.gca()\n')
+    #f1.write('axes.set_xlim(' + str(minX) + ', ' + str(maxX) + ')\n')
+    #f1.write('axes.set_ylim(' + str(minY) + ', ' + str(maxY) + ')\n')
+    f1.write('axes.set_xlim(-10, 10)\n')
+    f1.write('axes.set_ylim(-10, 10)\n')
+    f1.write('axes.xaxis.set_major_locator(plt.MultipleLocator(1.0))\n')
+    f1.write('axes.xaxis.set_minor_locator(plt.MultipleLocator(1.0))\n')
+    f1.write('axes.yaxis.set_major_locator(plt.MultipleLocator(1.0))\n')
+    f1.write('axes.yaxis.set_minor_locator(plt.MultipleLocator(1.0))\n')
+    f1.write('axes.grid(which=\'major\', axis=\'x\', linewidth=0.5, linestyle=\'-\', color=\'0.75\')\n')
+    f1.write('axes.grid(which=\'minor\', axis=\'x\', linewidth=0.25, linestyle=\'-\', color=\'0.75\')\n')
+    f1.write('axes.grid(which=\'major\', axis=\'y\', linewidth=0.5, linestyle=\'-\', color=\'0.75\')\n')
+    f1.write('axes.grid(which=\'minor\', axis=\'y\', linewidth=0.25, linestyle=\'-\', color=\'0.75\')\n')
+    f1.write('plt.gca().set_aspect(\'equal\', adjustable=\'box\')\n')
+    f1.write('plt.savefig(\'graph' + str(k) + '.png\', bbox_inches=\'tight\')\n')
+    f.close()
+    f1.close()
+    f2.close()
+    f3.close()
+for k in range(numvar):
+    os.system('python SolveGraph' + str(k) + '.py')

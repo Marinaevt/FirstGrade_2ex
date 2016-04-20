@@ -1,5 +1,5 @@
 def IsInside(x, y):
-    if y >(x--3)**2+1:
+    if (x - 3)**2+ (y - -3)**2<5**2:
         return 1
     else:
         return 0
